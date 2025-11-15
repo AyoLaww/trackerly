@@ -1,7 +1,6 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import { LogoutButton } from "@/components/logout-button";
 
 export default async function DashboardLayout({
@@ -24,8 +23,8 @@ export default async function DashboardLayout({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
             <div className="flex">
-              <div className="flex flex-shrink-0 items-center">
-                <h1 className="text-xl font-bold">Job Tracker</h1>
+              <div className="flex shrink-0 items-center">
+                <h1 className="text-xl font-bold">EmployTrack</h1>
               </div>
             </div>
             <div className="flex items-center gap-4">

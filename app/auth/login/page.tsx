@@ -84,6 +84,7 @@ export default function LoginPage() {
                 required
                 placeholder="you@example.com"
                 className="mt-1"
+                autoComplete="off"
               />
             </div>
 

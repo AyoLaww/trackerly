@@ -53,6 +53,7 @@ export function ApplicationForm({ application, onSuccess }: ApplicationFormProps
           defaultValue={application?.companyName}
           required
           className="mt-1"
+          autoComplete="off"
         />
       </div>
 
@@ -64,10 +65,11 @@ export function ApplicationForm({ application, onSuccess }: ApplicationFormProps
           defaultValue={application?.jobTitle}
           required
           className="mt-1"
+          autoComplete="off"
         />
       </div>
 
-      <div>
+      {/* <div>
         <Label htmlFor="applicationUrl">Application URL</Label>
         <Input
           id="applicationUrl"
@@ -77,7 +79,7 @@ export function ApplicationForm({ application, onSuccess }: ApplicationFormProps
           placeholder="https://..."
           className="mt-1"
         />
-      </div>
+      </div> */}
 
       <div>
         <Label htmlFor="status">Status *</Label>

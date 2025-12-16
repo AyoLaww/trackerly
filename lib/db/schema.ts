@@ -66,7 +66,7 @@ export const jobApplications = pgTable('job_applications', {
     .references(() => user.id, { onDelete: 'cascade' }),
   companyName: varchar('company_name', { length: 255 }).notNull(),
   jobTitle: varchar('job_title', { length: 255 }).notNull(),
-  applicationUrl: varchar('application_url', { length: 500 }),
+  // applicationUrl: varchar('application_url', { length: 500 }),
   status: statusEnum('status').notNull().default('applied'),
   appliedDate: timestamp('applied_date').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),

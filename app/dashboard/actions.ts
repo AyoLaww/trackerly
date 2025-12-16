@@ -20,7 +20,7 @@ export async function createApplication(formData: FormData) {
 
   const companyName = formData.get("companyName") as string;
   const jobTitle = formData.get("jobTitle") as string;
-  const applicationUrl = formData.get("applicationUrl") as string;
+  // const applicationUrl = formData.get("applicationUrl") as string;
   const status = formData.get("status") as ApplicationStatus;
   const appliedDate = formData.get("appliedDate") as string;
 
@@ -28,7 +28,7 @@ export async function createApplication(formData: FormData) {
     userId: session.user.id,
     companyName,
     jobTitle,
-    applicationUrl: applicationUrl || null,
+    // applicationUrl: applicationUrl || null,
     status,
     appliedDate: new Date(appliedDate),
   });
@@ -56,7 +56,7 @@ export async function updateApplication(id: string, formData: FormData) {
     .set({
       companyName,
       jobTitle,
-      applicationUrl: applicationUrl || null,
+      // applicationUrl: applicationUrl || null,
       status,
       appliedDate: new Date(appliedDate),
       updatedAt: new Date(),

@@ -13,22 +13,24 @@ export default async function DashboardLayout({
   });
 
   if (!session) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow">
+    <div className="min-h-screen bg-background">
+      {/* Navigation with theme colors */}
+      <nav className="border-b bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
             <div className="flex">
               <div className="flex shrink-0 items-center">
-                <h1 className="text-xl font-bold">EmployTrack</h1>
+                <h1 className="text-xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Job Tracker
+                </h1>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-muted-foreground">
                 {session.user.name || session.user.email}
               </span>
               <LogoutButton />

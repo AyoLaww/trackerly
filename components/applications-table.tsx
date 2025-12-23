@@ -38,7 +38,6 @@ export function ApplicationsTable({
 
   return (
     <>
-      {/* Filters */}
       <div className="mb-4">
         <ApplicationFilters
           currentFilter={currentFilter}
@@ -48,15 +47,14 @@ export function ApplicationsTable({
         />
       </div>
 
-      {/* Table or Empty State */}
       {applications.length === 0 ? (
         <div className="py-12 text-center">
-          <p className="text-gray-500">
+          <p className="text-muted-foreground">
             {currentFilter === "all" 
               ? "No applications yet." 
               : `No ${currentFilter} applications.`}
           </p>
-          <p className="mt-1 text-sm text-gray-400">
+          <p className="mt-1 text-sm text-muted-foreground/70">
             {currentFilter === "all" 
               ? "Click 'Add Application' to get started!" 
               : "Try changing the filter."}
@@ -64,42 +62,42 @@ export function ApplicationsTable({
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-border">
             <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Company
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Position
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Applied Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-border bg-card">
               {applications.map((app) => (
-                <tr key={app.id}>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                <tr key={app.id} className="hover:bg-muted/50 transition-colors">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     {app.companyName}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-muted-foreground">
                     {app.jobTitle}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm">
                     <StatusBadge status={app.status} />
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-muted-foreground">
                     {new Date(app.appliedDate).toLocaleDateString()}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 space-x-2">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm space-x-2">
                     <EditApplicationDialog application={app} />
                     <DeleteApplicationButton id={app.id} />
                   </td>
@@ -113,17 +111,18 @@ export function ApplicationsTable({
   );
 }
 
+// Updated StatusBadge with theme colors
 function StatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    applied: "bg-gray-100 text-gray-800",
-    interviewing: "bg-yellow-100 text-yellow-800",
-    offer: "bg-purple-100 text-purple-800",
-    accepted: "bg-green-100 text-green-800",
-    rejected: "bg-red-100 text-red-800",
+  const variants: Record<string, string> = {
+    applied: "bg-secondary text-secondary-foreground border-border",
+    interviewing: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20",
+    offer: "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20",
+    accepted: "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20",
+    rejected: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20",
   };
 
   return (
-    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${colors[status]}`}>
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${variants[status]}`}>
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </span>
   );

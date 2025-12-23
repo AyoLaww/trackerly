@@ -20,10 +20,7 @@ export default async function DashboardPage({
     return null;
   }
 
-  // Await searchParams
   const params = await searchParams;
-
-  // Fetch applications with sorting
   const sortOrder = params.sort === "earliest" ? asc : desc;
   
   const allApplications = await db
@@ -32,7 +29,6 @@ export default async function DashboardPage({
     .where(eq(jobApplications.userId, session.user.id))
     .orderBy(sortOrder(jobApplications.appliedDate));
 
-  // Filter applications by status
   const filter = (params.filter || "all") as FilterType;
   const applications = filter === "all" 
     ? allApplications 
@@ -44,48 +40,48 @@ export default async function DashboardPage({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
-        <p className="mt-1 text-sm text-gray-600">
+        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Track and manage your job applications
         </p>
       </div>
 
-      {/* Stats */}
+      {/* Stats - Updated with new theme colors */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
         <StatCard
           title="Total"
           value={allApplications.length}
-          color="bg-blue-50 text-blue-700"
+          variant="primary"
         />
         <StatCard
           title="Applied"
           value={allApplications.filter((app) => app.status === "applied").length}
-          color="bg-gray-50 text-gray-700"
+          variant="secondary"
         />
         <StatCard
           title="Interviewing"
           value={allApplications.filter((app) => app.status === "interviewing").length}
-          color="bg-yellow-50 text-yellow-700"
+          variant="warning"
         />
         <StatCard
           title="Offer"
           value={allApplications.filter((app) => app.status === "offer").length}
-          color="bg-purple-50 text-purple-700"
+          variant="accent"
         />
         <StatCard
           title="Accepted"
           value={allApplications.filter((app) => app.status === "accepted").length}
-          color="bg-green-50 text-green-700"
+          variant="success"
         />
         <StatCard
           title="Rejected"
           value={allApplications.filter((app) => app.status === "rejected").length}
-          color="bg-red-50 text-red-700"
+          variant="destructive"
         />
       </div>
 
       {/* Applications List */}
-      <div className="rounded-lg bg-white p-6 shadow">
+      <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Your Applications</h3>
           <AddApplicationDialog />
@@ -101,10 +97,28 @@ export default async function DashboardPage({
   );
 }
 
-function StatCard({ title, value, color }: { title: string; value: number; color: string }) {
+// Updated StatCard with theme-based variants
+function StatCard({ 
+  title, 
+  value, 
+  variant = "primary" 
+}: { 
+  title: string; 
+  value: number; 
+  variant?: "primary" | "secondary" | "accent" | "warning" | "success" | "destructive";
+}) {
+  const variants = {
+    primary: "bg-primary/10 text-primary border-primary/20",
+    secondary: "bg-secondary text-secondary-foreground border-border",
+    accent: "bg-accent/10 text-accent border-accent/20",
+    warning: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20",
+    success: "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20",
+    destructive: "bg-destructive/10 text-destructive border-destructive/20",
+  };
+
   return (
-    <div className={`rounded-lg p-4 ${color}`}>
-      <p className="text-sm font-medium">{title}</p>
+    <div className={`rounded-lg border p-4 transition-all hover:shadow-md ${variants[variant]}`}>
+      <p className="text-sm font-medium opacity-90">{title}</p>
       <p className="mt-2 text-3xl font-bold">{value}</p>
     </div>
   );
